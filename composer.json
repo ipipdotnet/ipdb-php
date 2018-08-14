@@ -1,0 +1,23 @@
+{
+    "name": "ipip",
+    "type": "library",
+    "description": "IPIP.net officially supported IP database ipdb format parsing library",
+    "keywords": ["ipip.net","geoip","geolocation", "geo","ip","ipdb"],
+    "homepage": "https://www.ipip.net",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "IPIP.net",
+            "email": "frk@ipip.net",
+            "homepage": "https://www.ipip.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },    
+    "autoload": {
+        "psr-4": {
+            "ipip": "src/ipip/"
+        }
+    }
+}
