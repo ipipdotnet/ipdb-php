@@ -1,5 +1,5 @@
 {
-    "name": "ipip-ipdb",
+    "name": "ipdb",
     "type": "library",
     "description": "IPIP.net officially supported IP database ipdb format parsing library",
     "keywords": ["ipip.net","geoip","geolocation", "geo","ip","ipdb"],
