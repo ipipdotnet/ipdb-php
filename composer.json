@@ -17,7 +17,7 @@
     },    
     "autoload": {
         "psr-4": {
-            "ipip/db": "src/ipip/db/"
+            "ipip\\db\\": "src/ipip/db/"
         }
     }
 }
