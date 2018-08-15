@@ -23,17 +23,21 @@ class Reader
      */
     public function __construct($database)
     {
+        if (is_readable($database) === FALSE)
+        {
+            throw new \InvalidArgumentException("The IP Database file \"{$database}\" does not exist or is not readable.");
+        }
+
         $this->database = $database;
 
         $this->init();
     }
 
+    /**
+     * @throws \Exception
+     */
     private function init()
     {
-        if (is_readable($this->database) === FALSE)
-        {
-            throw new \InvalidArgumentException("The IP Database file \"{$this->database}\" does not exist or is not readable.");
-        }
         $this->file = @fopen($this->database, 'rb');
         if ($this->file === FALSE)
         {
@@ -67,7 +71,7 @@ class Reader
     /**
      * @param $ip
      * @param string $language
-     * @return array|NULL
+     * @return array|null
      */
     public function find($ip, $language = 'CN')
     {
@@ -90,32 +94,25 @@ class Reader
         {
             if (!$this->supportV4())
             {
-
+                throw new \InvalidArgumentException("The Database not support IPv4 address.");
             }
         }
         elseif (strpos($ip, ':') !== FALSE)
         {
             if (!$this->supportV6())
             {
-
+                throw new \InvalidArgumentException("The Database not support IPv6 address.");
             }
         }
 
-        try
+        $node = $this->findNode($ip);
+        if ($node > 0)
         {
-            $node = $this->findNode($ip);
-            if ($node > 0)
-            {
-                $data = $this->resolve($node);
+            $data = $this->resolve($node);
 
-                $values = explode("\t", $data);
+            $values = explode("\t", $data);
 
-                return array_slice($values, $this->meta['languages'][$language], count($this->meta['fields']));
-            }
-        }
-        catch (\Exception $e)
-        {
-            return NULL;
+            return array_slice($values, $this->meta['languages'][$language], count($this->meta['fields']));
         }
 
         return NULL;
@@ -124,7 +121,7 @@ class Reader
     public function findMap($ip, $language = 'CN')
     {
         $array = $this->find($ip, $language);
-        if (NULL == $array)
+        if (NULL === $array)
         {
             return NULL;
         }
@@ -135,7 +132,7 @@ class Reader
     public function findInfo($ip, $language = 'CN')
     {
         $map = $this->findMap($ip, $language);
-        if (NULL == $map)
+        if (NULL === $map)
         {
             return NULL;
         }
@@ -146,7 +143,7 @@ class Reader
     /**
      * @param $ip
      * @return int
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     private function findNode($ip)
     {
@@ -218,7 +215,7 @@ class Reader
             return $node;
         }
 
-        throw new \Exception("find node failed");
+        throw new \RuntimeException("find node failed");
     }
 
     /**
