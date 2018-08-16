@@ -5,7 +5,6 @@ IPIP.net officially supported IP database ipdb format parsing library
 composer install ipip/db
 
 # Example Code
-<code>
 <pre>
 $db = new ipip\db\Reader('c:\tmp\ipdb\mydata6vipday4.ipdb');
 $loc = $db->find("2001:250:200::");
@@ -22,4 +21,3 @@ catch (Exception $e)
     exit($e->getMessage());
 }
 </pre>
-</code>
