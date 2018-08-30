@@ -55,7 +55,7 @@ class Reader
         }
 
         $fileSize = 4 + $metaLength + $this->meta['total_size'];
-        if ($fileSize != $this->fileSize)
+        if ($fileSize < $this->fileSize)
         {
             throw  new \Exception('IP Database size error.');
         }
