@@ -3,17 +3,21 @@
 require_once __DIR__ . '/src/ipip/db/Info.php';
 require_once __DIR__ . '/src/ipip/db/Reader.php';
 
-$db = new ipip\db\Reader('c:\tmp\ipdb\mydata6vipday4.ipdb');
-$loc = $db->find("2001:250:200::");
-$map = $db->findMap("2001:250:200::");
-$obj = $db->findInfo("2001:250:200::");
-var_dump($loc, $map, $obj);
+function randomIP() {
+    return sprintf('%d.%d.%d.%d', mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
+}
 
-try
+$db = new ipip\db\Reader(__DIR__ . '/mydata6vipday4.ipdb');
+
+$db = new ipip\db\Reader('c:/work/tiantexin/bb/mydatavipday4.ipdb');
+exit;
+
+$s = microtime(1);
+
+for ($i = 0; $i < 10000; $i++)
 {
-    var_dump($db->find("255.255.255.1"));
+
+    $loc = $db->find(randomIP());
 }
-catch (Exception $e)
-{
-    exit($e->getMessage());
-}
+
+echo round(microtime(1) - $s, 6);
