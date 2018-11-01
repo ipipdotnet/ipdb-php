@@ -49,6 +49,7 @@ class Reader
         $text = fread($this->file, $metaLength);
 
         $this->meta = json_decode($text, 1);
+
         if (!isset($this->meta['fields']) || !isset($this->meta['languages']))
         {
             throw new \Exception('IP Database metadata error.');
@@ -124,17 +125,6 @@ class Reader
         }
 
         return array_combine($this->meta['fields'], $array);
-    }
-
-    public function findInfo($ip, $language = 'CN')
-    {
-        $map = $this->findMap($ip, $language);
-        if (NULL == $map)
-        {
-            return NULL;
-        }
-
-        return new Info($map);
     }
 
     /**
