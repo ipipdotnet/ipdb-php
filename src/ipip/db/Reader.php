@@ -76,7 +76,7 @@ class Reader
      * @param string $language
      * @return array|NULL
      */
-    public function find($ip, $language = 'CN')
+    public function find($ip, $language)
     {
         if (is_resource($this->file) === FALSE)
         {
@@ -122,7 +122,7 @@ class Reader
         return NULL;
     }
 
-    public function findMap($ip, $language = 'CN')
+    public function findMap($ip, $language)
     {
         $array = $this->find($ip, $language);
         if (NULL == $array)
