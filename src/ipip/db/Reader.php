@@ -56,7 +56,7 @@ class Reader
 
         $this->meta = json_decode($text, 1);
 
-        if (!isset($this->meta['fields']) || !isset($this->meta['languages']))
+        if (isset($this->meta['fields']) === FALSE || isset($this->meta['languages']) === FALSE)
         {
             throw new \Exception('IP Database metadata error.');
         }
@@ -80,12 +80,12 @@ class Reader
     {
         if (is_resource($this->file) === FALSE)
         {
-            throw new \BadMethodCallException('closed IPIP DB.');
+            throw new \BadMethodCallException('IPIP DB closed.');
         }
 
-        if (!isset($this->meta['languages'][$language]))
+        if (isset($this->meta['languages'][$language]) === FALSE)
         {
-            throw new \InvalidArgumentException("language : {$language} not support");
+            throw new \InvalidArgumentException("language : {$language} not support.");
         }
 
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6) === FALSE)
@@ -125,7 +125,7 @@ class Reader
     public function findMap($ip, $language)
     {
         $array = $this->find($ip, $language);
-        if (NULL == $array)
+        if (NULL === $array)
         {
             return NULL;
         }
@@ -208,7 +208,7 @@ class Reader
             return $node;
         }
 
-        throw new \Exception("find node failed");
+        throw new \Exception("find node failed.");
     }
 
     /**
@@ -271,7 +271,7 @@ class Reader
                 }
             }
 
-            throw new \Exception("The Database file read bad data");
+            throw new \Exception("The Database file read bad data.");
         }
 
         return '';

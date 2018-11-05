@@ -30,7 +30,7 @@ class City
     public function findInfo($ip, $language)
     {
         $map = $this->findMap($ip, $language);
-        if (NULL == $map)
+        if (NULL === $map)
         {
             return NULL;
         }

@@ -3,7 +3,7 @@ IPIP.net officially supported IP database ipdb format parsing library
 
 # Installing
 <pre>
-composer install ipip/db
+composer require ipip/db
 </pre>
 
 # Example Code
