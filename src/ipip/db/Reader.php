@@ -105,6 +105,7 @@ class Reader
         try
         {
             $node = $this->findNode($ip);
+
             if ($node > 0)
             {
                 $data = $this->resolve($node);
@@ -133,6 +134,9 @@ class Reader
         return array_combine($this->meta['fields'], $array);
     }
 
+    private $v4offset = 0;
+    private $v6offsetCache = [];
+
     /**
      * @param $ip
      * @return int
@@ -140,9 +144,6 @@ class Reader
      */
     private function findNode($ip)
     {
-        static $v4offset = 0;
-        static $v6offsetCache = [];
-
         $binary = inet_pton($ip);
         $bitCount = strlen($binary) * 8; // 32 | 128
         $key = substr($binary, 0, 2);
@@ -150,7 +151,7 @@ class Reader
         $index = 0;
         if ($bitCount === 32)
         {
-            if ($v4offset === 0)
+            if ($this->v4offset === 0)
             {
                 for ($i = 0; $i < 96 && $node < $this->nodeCount; $i++)
                 {
@@ -168,19 +169,19 @@ class Reader
                         return 0;
                     }
                 }
-                $v4offset = $node;
+                $this->v4offset = $node;
             }
             else
             {
-                $node = $v4offset;
+                $node = $this->v4offset;
             }
         }
         else
         {
-            if (isset($v6offsetCache[$key]))
+            if (isset($this->v6offsetCache[$key]))
             {
                 $index = 16;
-                $node = $v6offsetCache[$key];
+                $node = $this->v6offsetCache[$key];
             }
         }
 
@@ -195,7 +196,7 @@ class Reader
 
             if ($i == 15)
             {
-                $v6offsetCache[$key] = $node;
+                $this->v6offsetCache[$key] = $node;
             }
         }
 
