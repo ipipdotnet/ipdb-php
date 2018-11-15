@@ -6,7 +6,7 @@ function __autoload($class)
 {
     if (strpos($class, 'ipip\db') !== FALSE)
     {
-        require_once __DIR__ . '/src/' . $class . '.php';
+        require_once __DIR__ . '/src/' . implode(DIRECTORY_SEPARATOR, explode('\\', $class)) . '.php';
     }
 }
 
