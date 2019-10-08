@@ -19,8 +19,7 @@ class BaseStationInfo
 
     public function __construct(array $data)
     {
-        foreach ($data AS $field => $value)
-        {
+        foreach($data AS $field => $value){
             $this->{$field} = $value;
         }
     }
