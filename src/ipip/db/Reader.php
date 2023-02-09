@@ -135,7 +135,6 @@ class Reader
     }
 
     private $v4offset = 0;
-    private $v6offsetCache = [];
 
     /**
      * @param $ip
@@ -176,14 +175,6 @@ class Reader
                 $node = $this->v4offset;
             }
         }
-        else
-        {
-            if (isset($this->v6offsetCache[$key]))
-            {
-                $index = 16;
-                $node = $this->v6offsetCache[$key];
-            }
-        }
 
         for ($i = $index; $i < $bitCount; $i++)
         {
@@ -193,11 +184,6 @@ class Reader
             }
 
             $node = $this->readNode($node, 1 & ((0xFF & ord($binary[$i >> 3])) >> 7 - ($i % 8)));
-
-            if ($i == 15)
-            {
-                $this->v6offsetCache[$key] = $node;
-            }
         }
 
         if ($node === $this->nodeCount)
